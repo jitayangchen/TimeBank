@@ -2,6 +2,7 @@ package cn.com.findfine.timebank.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private RecyclerView recyclerViewMain;
     private View rlMainCover;
+    private FloatingActionButton fab;
+    private CollapsingToolbarLayout collapsingToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void init() {
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
         rlMainCover = findViewById(R.id.rl_main_cover);
@@ -47,6 +53,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.fab:
                 startActivity(new Intent(MainActivity.this, AddEventActivity.class));
+//                fab.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
+//                rlMainCover.setBackgroundColor(Color.BLUE);
+//                collapsingToolbar.setContentScrimColor(Color.BLUE);
                 break;
             case R.id.rl_main_cover:
                 startActivity(new Intent(mContext, EventDetailActivity.class));
