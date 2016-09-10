@@ -5,5 +5,8 @@
     <!--菜单-->
     <string name="action_settings">设置</string>
     <string name="action_about">关于</string>
+    <string name="action_add_event_complete">完成</string>
+
+    <string name="calendar_date_picker_result_values">%1$s-%2$s-%3$s</string>
 
 </resources>

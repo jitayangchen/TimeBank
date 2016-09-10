@@ -6,11 +6,13 @@ package cn.com.findfine.timebank.data.bean;
 public class Event {
 
     private int icon;
+    private int type;
     private String title;
     private String createTime;
     private String targetTime;
     private String timeLeft;
     private String content;
+    private boolean isCompleted;
 
     public int getIcon() {
         return icon;
@@ -60,15 +62,20 @@ public class Event {
         this.content = content;
     }
 
-    @Override
-    public String toString() {
-        return "Event{" +
-                "icon=" + icon +
-                ", title='" + title + '\'' +
-                ", createTime='" + createTime + '\'' +
-                ", targetTime='" + targetTime + '\'' +
-                ", timeLeft='" + timeLeft + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+    public int getType() {
+        return type;
     }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
 }
