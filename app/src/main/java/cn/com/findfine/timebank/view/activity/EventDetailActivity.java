@@ -3,6 +3,7 @@ package cn.com.findfine.timebank.view.activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import cn.com.findfine.timebank.R;
 import cn.com.findfine.timebank.view.adapter.EventDetailAdapter;
@@ -18,6 +19,13 @@ public class EventDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_event_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         init();
     }
@@ -26,9 +34,9 @@ public class EventDetailActivity extends BaseActivity {
         viewPagerEventDetail = (ViewPager) findViewById(R.id.view_pager_event_detail);
 
         EventDetailAdapter adapter = new EventDetailAdapter(getSupportFragmentManager());
-        adapter.addFragment(EventDetailFragment.newInstance(), "逗");
-        adapter.addFragment(EventDetailFragment.newInstance(), "你");
-        adapter.addFragment(EventDetailFragment.newInstance(), "玩");
+        adapter.addFragment(EventDetailFragment.newInstance());
+        adapter.addFragment(EventDetailFragment.newInstance());
+        adapter.addFragment(EventDetailFragment.newInstance());
         viewPagerEventDetail.setAdapter(adapter);
     }
 }

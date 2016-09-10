@@ -16,7 +16,6 @@ import cn.com.findfine.timebank.view.fragment.EventDetailFragment;
 public class EventDetailAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragments = new ArrayList<>();
-    private final List<String> mFragmentTitles = new ArrayList<>();
 
     public EventDetailAdapter(FragmentManager fm) {
         super(fm);
@@ -35,11 +34,10 @@ public class EventDetailAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mFragmentTitles.get(position);
+        return "";
     }
 
-    public void addFragment(Fragment fragment, String title) {
+    public void addFragment(Fragment fragment) {
         mFragments.add(fragment);
-        mFragmentTitles.add(title);
     }
 }
