@@ -18,10 +18,9 @@
         </activity>
         <activity android:name=".view.activity.SettingsActivity" />
         <activity android:name=".view.activity.AboutActivity" />
-        <activity
-            android:name=".view.activity.AddEventActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".view.activity.AddEventActivity" />
         <activity android:name=".view.activity.EventDetailActivity" />
+        <activity android:name=".view.activity.SelectEventSortActivity"></activity>
     </application>
 
 </manifest>

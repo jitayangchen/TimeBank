@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimaryPicker">#FF4081</color>
-    <color name="colorPrimaryDarkPicker">#EFFF4081</color>
+    <color name="colorPrimaryPicker">#61c0dc</color>
+    <color name="colorPrimaryDarkPicker">#ee61c0dc</color>
 
     <color name="default_text_color_holo_dark">#ffffffff</color>
     <color name="default_text_color_holo_dark_disabled">#ff4c4c4c</color>
