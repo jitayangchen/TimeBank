@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.com.findfine.timebank.R;
-import cn.com.findfine.timebank.data.bean.Event;
+import cn.com.findfine.timebank.data.bean.EventInfo;
 import cn.com.findfine.timebank.view.activity.EventDetailActivity;
 
 /**
@@ -21,21 +23,27 @@ import cn.com.findfine.timebank.view.activity.EventDetailActivity;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private Context context;
-    private List<Event> eventList = null;
+    private List<EventInfo> eventInfoList = null;
 
     public MainAdapter(Context context) {
         this.context = context;
     }
 
-    public List<Event> getEventList() {
-        return eventList;
+    public List<EventInfo> getEventInfoList() {
+        return eventInfoList;
     }
 
-    public void setEventList(List<Event> eventList) {
-        if (this.eventList == null) {
-            this.eventList = new ArrayList<>();
+    public void setEventInfoList(List<EventInfo> eventInfoList) {
+        if (this.eventInfoList == null) {
+            this.eventInfoList = new ArrayList<>();
         }
-        this.eventList.addAll(eventList);
+        this.eventInfoList.addAll(eventInfoList);
+    }
+
+    public void clearData() {
+        if (this.eventInfoList != null && this.eventInfoList.size() > 0) {
+            this.eventInfoList.clear();
+        }
     }
 
     @Override
@@ -56,8 +64,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
+        private ImageView ivIcon;
+        private TextView tvTitle;
+        private TextView tvTargetTime;
+        private TextView tvTimeLeft;
+
         public ViewHolder(View itemView) {
             super(itemView);
+            ivIcon = (ImageView) itemView.findViewById(R.id.iv_icon);
+            tvTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            tvTargetTime = (TextView) itemView.findViewById(R.id.tv_target_time);
+            tvTimeLeft = (TextView) itemView.findViewById(R.id.tv_time_left);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

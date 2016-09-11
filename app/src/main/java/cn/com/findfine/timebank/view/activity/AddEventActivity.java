@@ -2,9 +2,11 @@ package cn.com.findfine.timebank.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,8 +15,12 @@ import com.zcw.togglebutton.ToggleButton;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import cn.com.findfine.timebank.R;
+import cn.com.findfine.timebank.data.bean.EventInfo;
+import cn.com.findfine.timebank.data.db.EventDataDao;
+import cn.com.findfine.timebank.log.TLog;
 
 public class AddEventActivity extends BaseActivity implements View.OnClickListener, CalendarDatePickerDialogFragment.OnDateSetListener {
 
@@ -23,6 +29,9 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
     private View rlSelectDate;
     private TextView tvDateContent;
     private ToggleButton tbFrontEover;
+    private EditText etTitleContent;
+    private long targetTime = 0;
+    private EventDataDao eventDataDao = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +47,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
                 onBackPressed();
             }
         });
-
+        eventDataDao = EventDataDao.getInstance();
         init();
 
     }
@@ -48,11 +57,14 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         rlSelectDate.setOnClickListener(this);
         tvDateContent = (TextView) findViewById(R.id.tv_date_content);
         tbFrontEover = (ToggleButton) findViewById(R.id.tb_front_cover);
+        etTitleContent = (EditText) findViewById(R.id.et_title_content);
 
         tbFrontEover.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
             @Override
             public void onToggle(boolean on) {
-                Toast.makeText(AddEventActivity.this, on + "", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AddEventActivity.this, on + "", Toast.LENGTH_SHORT).show();
+                List<EventInfo> eventInfos = eventDataDao.queryAll();
+                TLog.i(eventInfos.toString());
             }
         });
     }
@@ -70,6 +82,8 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onDateSet(CalendarDatePickerDialogFragment dialog, long time) {
+        TLog.i(String.valueOf(time));
+        targetTime = time;
         String formatTime = sdf.format(new Date(time));
         tvDateContent.setText(formatTime);
     }
@@ -90,7 +104,21 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         int id = item.getItemId();
 
         if (id == R.id.action_add_event_complete) {
-            Toast.makeText(AddEventActivity.this, "action_add_event_complete", Toast.LENGTH_SHORT).show();
+            String title = etTitleContent.getText().toString();
+            if (TextUtils.isEmpty(title)) {
+                Toast.makeText(AddEventActivity.this, "Title not null", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            EventInfo eventInfo = new EventInfo();
+            eventInfo.setTitle(title);
+            eventInfo.setCompleted(false);
+            eventInfo.setType(1);
+            eventInfo.setContent("YYYYYYYYYYY");
+            eventInfo.setCreateTime(System.currentTimeMillis() / 1000);
+            eventInfo.setTargetTime(targetTime / 1000);
+            eventDataDao.insert(eventInfo);
+            Toast.makeText(AddEventActivity.this, "Success", Toast.LENGTH_SHORT).show();
         }
 
         return true;

@@ -46,6 +46,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         recyclerViewMain.setLayoutManager(linearLayoutManager);
         MainAdapter adapter = new MainAdapter(mContext);
         recyclerViewMain.setAdapter(adapter);
+
+
     }
 
     @Override
