@@ -21,22 +21,43 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:titleEnabled="false">
 
-            <RelativeLayout
-                android:id="@+id/rl_main_cover"
+            <LinearLayout
+                android:id="@+id/ll_main_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="1">
+                app:layout_collapseParallaxMultiplier="1"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_marginTop="40dp"
+                    android:textSize="@dimen/base_font_size"
+                    android:text="距离" />
+
+                <TextView
+                    android:id="@+id/tv_main_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="22sp"/>
+
+                <TextView
+                    android:id="@+id/tv_main_left_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:textColor="@android:color/white"
-                    android:text="13"
                     android:textSize="120sp" />
-            </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_main_format_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"/>
+            </LinearLayout>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -56,5 +77,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@mipmap/ic_add_event" />
 </android.support.design.widget.CoordinatorLayout>

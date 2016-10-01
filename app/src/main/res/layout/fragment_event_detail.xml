@@ -4,12 +4,48 @@
     android:layout_height="match_parent"
     tools:context="cn.com.findfine.timebank.view.fragment.EventDetailFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_detail_cover"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:textSize="120sp"
-        android:textColor="@android:color/white"
-        android:text="13" />
+        android:layout_marginTop="100dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/base_font_size"
+            android:textColor="@android:color/white"
+            android:text="距离" />
+
+        <TextView
+            android:id="@+id/tv_detail_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:textSize="22sp"
+            android:textColor="@android:color/white"
+            android:text="Title"/>
+
+        <TextView
+            android:id="@+id/tv_detail_left_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="1"
+            android:textSize="120sp" />
+
+        <TextView
+            android:id="@+id/tv_detail_format_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:text="2016-08-08"/>
+    </LinearLayout>
 
 </RelativeLayout>

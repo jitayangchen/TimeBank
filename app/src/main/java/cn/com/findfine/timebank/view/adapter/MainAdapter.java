@@ -3,18 +3,16 @@ package cn.com.findfine.timebank.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.com.findfine.timebank.R;
 import cn.com.findfine.timebank.data.bean.EventInfo;
+import cn.com.findfine.timebank.data.cache.EventDataCache;
+import cn.com.findfine.timebank.util.DateUtil;
 import cn.com.findfine.timebank.view.activity.EventDetailActivity;
 
 /**
@@ -23,27 +21,11 @@ import cn.com.findfine.timebank.view.activity.EventDetailActivity;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private Context context;
-    private List<EventInfo> eventInfoList = null;
+    private final EventDataCache eventDataCache;
 
     public MainAdapter(Context context) {
         this.context = context;
-    }
-
-    public List<EventInfo> getEventInfoList() {
-        return eventInfoList;
-    }
-
-    public void setEventInfoList(List<EventInfo> eventInfoList) {
-        if (this.eventInfoList == null) {
-            this.eventInfoList = new ArrayList<>();
-        }
-        this.eventInfoList.addAll(eventInfoList);
-    }
-
-    public void clearData() {
-        if (this.eventInfoList != null && this.eventInfoList.size() > 0) {
-            this.eventInfoList.clear();
-        }
+        eventDataCache = EventDataCache.getInstance();
     }
 
     @Override
@@ -54,12 +36,21 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.i("YYY", "position === " + position);
+        EventInfo eventInfo = eventDataCache.get(position);
+        if (null != eventInfo) {
+            holder.tvTitle.setText(eventInfo.getTitle());
+
+            holder.tvTargetTime.setText(DateUtil.getTimeByMillis(eventInfo.getTargetTime()));
+            holder.tvTimeLeft.setText(DateUtil.getDayLeftByTargetMillis(eventInfo.getTargetTime()) + " 天");
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 100;
+        if (eventDataCache.getEventInfos() == null) {
+            return 0;
+        }
+        return eventDataCache.getEventInfos().size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,9 +70,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    context.startActivity(new Intent(context, EventDetailActivity.class));
+                    Intent intent = new Intent(context, EventDetailActivity.class);
+                    intent.putExtra(EventDetailActivity.POSITION, getLayoutPosition());
+                    context.startActivity(intent);
                 }
             });
         }
     }
+
 }

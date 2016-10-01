@@ -4,8 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@mipmap/bg_main_max"
     tools:context="cn.com.findfine.timebank.view.activity.SelectEventSortActivity">
 
     <include layout="@layout/layout_toolbar" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_select_event_sort"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"/>
 
 </LinearLayout>

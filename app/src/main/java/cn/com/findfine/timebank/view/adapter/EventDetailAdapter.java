@@ -3,11 +3,8 @@ package cn.com.findfine.timebank.view.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import cn.com.findfine.timebank.data.cache.EventDataCache;
 import cn.com.findfine.timebank.view.fragment.EventDetailFragment;
 
 /**
@@ -15,21 +12,18 @@ import cn.com.findfine.timebank.view.fragment.EventDetailFragment;
  */
 public class EventDetailAdapter extends FragmentPagerAdapter {
 
-    private final List<Fragment> mFragments = new ArrayList<>();
-
     public EventDetailAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int position) {
-        Log.i("YYY", "----getItem----");
-        return EventDetailFragment.newInstance();
+        return EventDetailFragment.newInstance(position);
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return EventDataCache.getInstance().getEventInfos().size();
     }
 
     @Override
@@ -37,7 +31,4 @@ public class EventDetailAdapter extends FragmentPagerAdapter {
         return "";
     }
 
-    public void addFragment(Fragment fragment) {
-        mFragments.add(fragment);
-    }
 }

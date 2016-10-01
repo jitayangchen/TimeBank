@@ -13,9 +13,13 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    signingConfigs {
+
     }
 }
 
@@ -26,5 +30,6 @@ dependencies {
     compile 'com.android.support:design:24.2.0'
     compile 'com.android.support:support-v4:24.2.0'
     compile 'com.zcw:togglebutton-library:1.0.0'
+    compile 'com.github.lawloretienne:quickreturn:0.0.3'
     compile project(':betterpickerslibrary')
 }

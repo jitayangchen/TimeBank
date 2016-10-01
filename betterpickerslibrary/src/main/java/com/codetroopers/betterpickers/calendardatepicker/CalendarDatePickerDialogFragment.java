@@ -307,6 +307,8 @@ public class CalendarDatePickerDialogFragment extends DialogFragment implements 
                 tryVibrate();
                 if (mCallBack != null) {
                     mCallBack.onDateSet(CalendarDatePickerDialogFragment.this, mCalendar.getTimeInMillis());
+                    mCallBack.onDateSet(CalendarDatePickerDialogFragment.this, mCalendar.get(Calendar.YEAR),
+                            mCalendar.get(Calendar.MONTH) + 1, mCalendar.get(Calendar.DAY_OF_MONTH));
                 }
                 dismiss();
             }

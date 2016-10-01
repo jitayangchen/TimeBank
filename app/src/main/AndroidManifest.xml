@@ -8,19 +8,31 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".view.activity.MainActivity">
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.SettingsActivity" />
-        <activity android:name=".view.activity.AboutActivity" />
-        <activity android:name=".view.activity.AddEventActivity" />
-        <activity android:name=".view.activity.EventDetailActivity" />
-        <activity android:name=".view.activity.SelectEventSortActivity"></activity>
+        <activity
+            android:name=".view.activity.SettingsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.AddEventActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.EventDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.SelectEventSortActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
