@@ -25,3 +25,4 @@
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*        # 混淆时所采用的算法
 
 -keep class android.support.v4.** { *; }
+-keep class android.support.v7.** { *; }

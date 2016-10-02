@@ -82,7 +82,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         List<EventInfo> eventInfos = EventDataDao.getInstance().queryAllEventByCurrentTime(DateUtil.getTodayStartTime());
         eventDataCache.addAll(eventInfos);
         adapter.notifyDataSetChanged();
-        updateCoverInfo();
+        updateCoverInfo(eventInfos.size() <= 0);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (requestCode == 3000 && resultCode == 4000) {
             EventInfo eventInfo = data.getParcelableExtra("event_info");
             EventDataCache.getInstance().insert(eventInfo);
-            updateCoverInfo();
+            updateCoverInfo(false);
             adapter.notifyDataSetChanged();
         }
     }
@@ -135,7 +135,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         return true;
     }
 
-    private void updateCoverInfo() {
+    /**
+     *
+     * @param isNull 是否有事件
+     */
+    private void updateCoverInfo(boolean isNull) {
+        if (isNull) {
+            tvMainTitle.setText("没有事件,请点击右下角+号进行添加");
+            return;
+        }
         String eventId = Preference.getEventCoverId();
         if (!TextUtils.isEmpty(eventId)) {
             currentPosition = eventDataCache.getPositionByEventId(eventId);

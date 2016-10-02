@@ -1,5 +1,13 @@
 apply plugin: 'com.android.application'
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+def keyStoreFilepath = properties.getProperty("keystore.path")
+def keyStorePassword = properties.getProperty("keystore.password")
+def keyStoreAlias = properties.getProperty("keystore.alias")
+def keyStoreAliasPassword = properties.getProperty("keystore.alias_password")
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
@@ -11,15 +19,24 @@ android {
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
+
+    signingConfigs {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            storeFile file(keyStoreFilepath)
+            storePassword keyStorePassword
+            keyAlias keyStoreAlias
+            keyPassword keyStoreAliasPassword
         }
     }
 
-    signingConfigs {
-
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 }
 
