@@ -9,13 +9,13 @@ def keyStoreAlias = properties.getProperty("keystore.alias")
 def keyStoreAliasPassword = properties.getProperty("keystore.alias_password")
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "cn.com.findfine.timebank"
         minSdkVersion 15
-        targetSdkVersion 23
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
     }
@@ -30,6 +30,14 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            buildConfigField "String", "TEST_URL", "\"http://www.lalala.com/\""
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
         release {
             signingConfig signingConfigs.release
             minifyEnabled true
@@ -38,15 +46,35 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+//    productFlavors {
+//        for (int i = 0; i < 10; i++) {
+//            def channel = "channel_" + i
+//            "${channel}" {
+//                manifestPlaceholders = [CHANNEL_VALUE: channel]
+//            }
+//        }
+//    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:appcompat-v7:25.3.0'
+    compile 'com.android.support:design:25.3.0'
+    compile 'com.android.support:support-v4:25.3.0'
     compile 'com.zcw:togglebutton-library:1.0.0'
     compile 'com.github.lawloretienne:quickreturn:0.0.3'
     compile project(':betterpickerslibrary')
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

@@ -77,7 +77,7 @@
         ALWAYS ADD NEW ENTRIES AT THE END. Othewise the entries after the insertion point will
         not match for languages that didn't get the translations.
     -->
-    <string-array name="timezone_rename_ids" translatable="false">
+    <string-array name="timezone_rename_ids">
 
         <!-- Australia -->
         <item>"Australien/Darwin"</item>

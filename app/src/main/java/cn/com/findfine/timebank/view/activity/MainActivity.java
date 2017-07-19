@@ -8,16 +8,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
 import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.List;
 
+import cn.com.findfine.timebank.BuildConfig;
 import cn.com.findfine.timebank.R;
 import cn.com.findfine.timebank.data.bean.EventInfo;
 import cn.com.findfine.timebank.data.cache.EventDataCache;
@@ -87,12 +91,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        Log.i("onClick", "----------BuildConfig.DEBUG---------- " + BuildConfig.DEBUG);
+        Log.i("onClick", "----------BuildConfig.BUILD_TYPE---------- " + BuildConfig.BUILD_TYPE);
         switch (view.getId()) {
             case R.id.fab:
                 startActivityForResult(new Intent(MainActivity.this, AddEventActivity.class), 3000);
 //                fab.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
 //                rlMainCover.setBackgroundColor(Color.BLUE);
 //                collapsingToolbar.setContentScrimColor(Color.BLUE);
+                String token = FirebaseInstanceId.getInstance().getToken();
+                Log.i("MainActivity", token);
+                // Log and toast
+                Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ll_main_cover:
                 Intent intent = new Intent(mContext, EventDetailActivity.class);

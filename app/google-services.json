@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1057843321129",
+    "firebase_url": "https://timebank-7ee87.firebaseio.com",
+    "project_id": "timebank-7ee87",
+    "storage_bucket": "timebank-7ee87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1057843321129:android:d41eae67277cef37",
+        "android_client_info": {
+          "package_name": "cn.com.findfine.timebank"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1057843321129-g14i0rs6tqqickqdkij9p6c1eka2rm8v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj_MHnZHb5TiJnF2Le25_AHvee9NNgI6g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
