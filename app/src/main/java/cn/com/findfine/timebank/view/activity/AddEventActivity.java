@@ -1,12 +1,19 @@
 package cn.com.findfine.timebank.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,6 +49,7 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_event);
+//        AndroidBug5497Workaround.assistActivity(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("添加事件");
         setSupportActionBar(toolbar);
@@ -55,6 +63,19 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
         eventDataDao = EventDataDao.getInstance();
         init();
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN
+                | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.i("GlobalLayout", "====================onGlobalLayout===================");
+                Rect r = new Rect();
+                getWindow().getDecorView().getWindowVisibleDisplayFrame(r); //获取当前窗口可视区域大小
+                View decorView = getWindow().getDecorView();
+                int diff = decorView.getHeight() - r.bottom;
+                decorView.setPadding(0, 0, 0, diff);
+            }
+        });//当在一个视图树中全局布局发生改变或者视图树中的某个视图的可视状态发生改变时，所要调用的回调函数的接口类
     }
 
     private void init() {
@@ -168,4 +189,105 @@ public class AddEventActivity extends BaseActivity implements View.OnClickListen
 
         return true;
     }
+
+//    private ViewTreeObserver.OnGlobalLayoutListener onGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
+//        @Override
+//        public void onGlobalLayout() {
+//            //如果布局根节点使用了android:fitsSystemWindows="true"属性或者导航栏不在底部，无需处理
+////            if (!navigationAtBottom)
+////                return;
+//            Rect r = new Rect();
+//            getWindow().getDecorView().getWindowVisibleDisplayFrame(r); //获取当前窗口可视区域大小
+//            int diff;
+//            int keyboardHeight;
+//            boolean isPopup = false;
+//            if (mBarParams.systemWindows) {
+//                keyboardHeight = mContentView.getHeight() - r.bottom - navigationBarHeight;
+//                if (mBarParams.onKeyboardListener != null) {
+//                    if (keyboardHeight > navigationBarHeight)
+//                        isPopup = true;
+////                    mBarParams.onKeyboardListener.onKeyboardChange(isPopup, keyboardHeight);
+//                }
+//                return;
+//            }
+//            if (mChildView != null) {
+//                if (mBarParams.isSupportActionBar)
+//                    diff = mContentView.getHeight() + statusBarHeight + actionBarHeight - r.bottom;
+//                else if (mBarParams.fits)
+//                    diff = mContentView.getHeight() + statusBarHeight - r.bottom;
+//                else
+//                    diff = mContentView.getHeight() - r.bottom;
+//                if (mBarParams.fullScreen)
+//                    keyboardHeight = diff - navigationBarHeight;
+//                else
+//                    keyboardHeight = diff;
+//                if (mBarParams.fullScreen && diff == navigationBarHeight) {
+//                    diff -= navigationBarHeight;
+//                }
+//                if (keyboardHeight != keyboardHeightPrevious) {
+//                    mContentView.setPadding(paddingLeft, paddingTop, paddingRight, diff + paddingBottom);
+//                    keyboardHeightPrevious = keyboardHeight;
+//                    if (mBarParams.onKeyboardListener != null) {
+//                        if (keyboardHeight > navigationBarHeight)
+//                            isPopup = true;
+//                        mBarParams.onKeyboardListener.onKeyboardChange(isPopup, keyboardHeight);
+//                    }
+//                }
+//            } else {
+//                diff = mContentView.getHeight() - r.bottom;
+//
+//                if (mBarParams.navigationBarEnable && mBarParams.navigationBarWithKitkatEnable) {
+//                    if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT || OSUtils.isEMUI3_1()) {
+//                        keyboardHeight = diff - navigationBarHeight;
+//                    } else {
+//                        if (!mBarParams.fullScreen)
+//                            keyboardHeight = diff;
+//                        else
+//                            keyboardHeight = diff - navigationBarHeight;
+//                    }
+//                    if (mBarParams.fullScreen && diff == navigationBarHeight)
+//                        diff -= navigationBarHeight;
+//                } else
+//                    keyboardHeight = diff;
+//                if (keyboardHeight != keyboardHeightPrevious) {
+//                    if (mBarParams.isSupportActionBar) {
+//                        mContentView.setPadding(0, statusBarHeight + actionBarHeight, 0, diff);
+//                    } else if (mBarParams.fits) {
+//                        mContentView.setPadding(0, statusBarHeight, 0, diff);
+//                    } else
+//                        mContentView.setPadding(0, 0, 0, diff);
+//                    keyboardHeightPrevious = keyboardHeight;
+//                    if (mBarParams.onKeyboardListener != null) {
+//                        if (keyboardHeight > navigationBarHeight)
+//                            isPopup = true;
+////                        mBarParams.onKeyboardListener.onKeyboardChange(isPopup, keyboardHeight);
+//                    }
+//                }
+//            }
+//        }
+//    }
+
+    private int getNavigationBarHeight(Context context) {
+        Resources res = context.getResources();
+        int result = 0;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+            return getInternalDimensionSize(res, "navigation_bar_height");
+        }
+        return result;
+    }
+
+    private int getInternalDimensionSize(Resources res, String key) {
+        int result = 0;
+        try {
+            Class clazz = Class.forName("com.android.internal.R$dimen");
+            Object object = clazz.newInstance();
+            int resourceId = Integer.parseInt(clazz.getField(key).get(object).toString());
+            if (resourceId > 0)
+                result = res.getDimensionPixelSize(resourceId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

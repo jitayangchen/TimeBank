@@ -16,8 +16,8 @@ android {
         applicationId "cn.com.findfine.timebank"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode Integer.valueOf(VERSION_CODE)
+        versionName VERSION_NAME
     }
 
     signingConfigs {
@@ -33,12 +33,14 @@ android {
 
         debug {
             buildConfigField "String", "TEST_URL", "\"http://www.lalala.com/\""
+            buildConfigField "boolean", "IS_ON_LINE", "false"
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
+            buildConfigField "boolean", "IS_ON_LINE", "false"
             signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true

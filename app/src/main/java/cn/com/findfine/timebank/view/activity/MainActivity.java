@@ -99,8 +99,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //                fab.setBackgroundTintList(ColorStateList.valueOf(Color.BLUE));
 //                rlMainCover.setBackgroundColor(Color.BLUE);
 //                collapsingToolbar.setContentScrimColor(Color.BLUE);
+
+
                 String token = FirebaseInstanceId.getInstance().getToken();
-                Log.i("MainActivity", token);
+//                Log.i("MainActivity", token);
                 // Log and toast
                 Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
                 break;
