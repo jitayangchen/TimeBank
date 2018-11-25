@@ -9,13 +9,13 @@ def keyStoreAlias = properties.getProperty("keystore.alias")
 def keyStoreAliasPassword = properties.getProperty("keystore.alias_password")
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "cn.com.findfine.timebank"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode Integer.valueOf(VERSION_CODE)
         versionName VERSION_NAME
     }
